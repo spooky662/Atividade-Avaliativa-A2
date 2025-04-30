@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Estrutura do nó (usuário)
+// Estrutura do no (usuario)
 typedef struct NO {
     char nome[100];  // chave
     int id;
@@ -14,12 +14,12 @@ typedef struct NO {
 
 typedef NO* AVLTree;
 
-// Função para obter altura
+// Funcao para obter altura
 int altura_NO(NO* no) {
     return (no == NULL) ? -1 : no->altura;
 }
 
-// Maior entre dois números
+// Maior entre dois numeros
 int maior(int a, int b) {
     return (a > b) ? a : b;
 }
@@ -29,7 +29,7 @@ int fatorBalanceamento_NO(NO* no) {
     return abs(altura_NO(no->esq) - altura_NO(no->dir));
 }
 
-// Rotações
+// Rotacoes
 void RotacaoLL(AVLTree* raiz) {
     NO* no = (*raiz)->esq;
     (*raiz)->esq = no->dir;
@@ -58,7 +58,7 @@ void RotacaoRL(AVLTree* raiz) {
     RotacaoRR(raiz);
 }
 
-// Inserir usuário
+// Inserir usuario
 int cadastrarUsuario(AVLTree* raiz, char* nome, int id, char* email) {
     if (*raiz == NULL) {
         NO* novo = (NO*)malloc(sizeof(NO));
@@ -99,7 +99,7 @@ int cadastrarUsuario(AVLTree* raiz, char* nome, int id, char* email) {
     return res;
 }
 
-// Buscar usuário
+// Buscar usuario
 NO* buscarUsuario(AVLTree raiz, char* nome) {
     if (raiz == NULL) return NULL;
     int cmp = strcmp(nome, raiz->nome);
@@ -118,7 +118,7 @@ NO* procuraMenor(NO* atual) {
     return atual;
 }
 
-// Remover usuário
+// Remover usuario
 int removerUsuario(AVLTree* raiz, char* nome) {
     if (*raiz == NULL) return 0;
 
@@ -167,7 +167,7 @@ int removerUsuario(AVLTree* raiz, char* nome) {
     return res;
 }
 
-// Listar usuários em ordem alfabética
+// Listar usuarios em ordem alfabetica
 void listarUsuarios(AVLTree raiz) {
     if (raiz != NULL) {
         listarUsuarios(raiz->esq);
@@ -184,18 +184,18 @@ void menu() {
 
     do {
         printf("\n===== MENU =====\n");
-        printf("1. Cadastrar Usuário\n");
-        printf("2. Remover Usuário\n");
-        printf("3. Buscar Usuário\n");
-        printf("4. Listar Usuários\n");
+        printf("1. Cadastrar Usuario\n");
+        printf("2. Remover Usuario\n");
+        printf("3. Buscar Usuario\n");
+        printf("4. Listar Usuarios\n");
         printf("0. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         getchar(); // Limpa o buffer do teclado
 
         switch (opcao) {
             case 1:
-                printf("\n--- Cadastrar Usuário ---\n");
+                printf("\n--- Cadastrar Usuario ---\n");
                 printf("Nome: ");
                 fgets(nome, sizeof(nome), stdin);
                 nome[strcspn(nome, "\n")] = '\0'; // Remove o \n
@@ -206,22 +206,22 @@ void menu() {
                 fgets(email, sizeof(email), stdin);
                 email[strcspn(email, "\n")] = '\0';
                 if (cadastrarUsuario(&usuarios, nome, id, email))
-                    printf("Usuário cadastrado com sucesso!\n");
+                    printf("Usuario cadastrado com sucesso!\n");
                 break;
 
             case 2:
-                printf("\n--- Remover Usuário ---\n");
+                printf("\n--- Remover Usuario ---\n");
                 printf("Nome: ");
                 fgets(nome, sizeof(nome), stdin);
                 nome[strcspn(nome, "\n")] = '\0';
                 if (removerUsuario(&usuarios, nome))
-                    printf("Usuário removido.\n");
+                    printf("Usuario removido.\n");
                 else
-                    printf("Usuário não encontrado.\n");
+                    printf("Usuario não encontrado.\n");
                 break;
 
             case 3:
-                printf("\n--- Buscar Usuário ---\n");
+                printf("\n--- Buscar Usuario ---\n");
                 printf("Nome: ");
                 fgets(nome, sizeof(nome), stdin);
                 nome[strcspn(nome, "\n")] = '\0';
@@ -229,11 +229,11 @@ void menu() {
                 if (encontrado)
                     printf("Encontrado: %s, ID: %d, Email: %s\n", encontrado->nome, encontrado->id, encontrado->email);
                 else
-                    printf("Usuário não encontrado.\n");
+                    printf("Usuario nao encontrado.\n");
                 break;
 
             case 4:
-                printf("\n--- Lista de Usuários (Ordem Alfabética) ---\n");
+                printf("\n--- Lista de Usuarios (Ordem Alfabetica) ---\n");
                 listarUsuarios(usuarios);
                 break;
 
@@ -242,7 +242,7 @@ void menu() {
                 break;
 
             default:
-                printf("Opção inválida!\n");
+                printf("Opcao invalida!\n");
         }
     } while (opcao != 0);
 }
