@@ -14,6 +14,7 @@ typedef struct Produto {
     struct Produto *esq, *dir, *pai;
 } Produto;
 
+//cria novo produto, vermelho e com filhos nulos e pretos
 Produto* criarProduto(int codigo, const char* nome, int quantidade, float preco) {
     Produto* novo = (Produto*)malloc(sizeof(Produto));
     novo->codigo = codigo;
@@ -25,6 +26,7 @@ Produto* criarProduto(int codigo, const char* nome, int quantidade, float preco)
     return novo;
 }
 
+//funcoes de rotacao
 Produto* rotacaoEsquerda(Produto* raiz, Produto* x) {
     Produto* y = x->dir;
     x->dir = y->esq;
@@ -57,6 +59,7 @@ Produto* rotacaoDireita(Produto* raiz, Produto* y) {
     return raiz;
 }
 
+//inserir no produto estruturado em inserirProduto
 Produto* inserirBST(Produto* raiz, Produto* novo) {
     if (raiz == NULL) return novo;
 
@@ -71,6 +74,7 @@ Produto* inserirBST(Produto* raiz, Produto* novo) {
     return raiz;
 }
 
+//correcao de possiveis violacoes nas regras apos insercao de novo no
 Produto* corrigirInsercao(Produto* raiz, Produto* no) {
     Produto* tio;
     while (no != raiz && no->pai->cor == RED) {
@@ -112,6 +116,7 @@ Produto* corrigirInsercao(Produto* raiz, Produto* no) {
     return raiz;
 }
 
+//cria e estrutura o produto antes de inserir na arvore
 Produto* inserirProduto(Produto* raiz, int codigo, const char* nome, int quantidade, float preco) {
     Produto* novo = criarProduto(codigo, nome, quantidade, preco);
     raiz = inserirBST(raiz, novo);
@@ -124,6 +129,7 @@ Produto* buscarProduto(Produto* raiz, int codigo) {
     else return buscarProduto(raiz->dir, codigo);
 }
 
+//imprime todos os produtos
 void listarProdutos(Produto* raiz) {
     if (raiz == NULL) return;
     listarProdutos(raiz->esq);
@@ -133,12 +139,13 @@ void listarProdutos(Produto* raiz) {
     listarProdutos(raiz->dir);
 }
 
-// Remoção e correção (versão simplificada e adaptada da original)
+//encontra o no com o menor valor em uma subarvore para operacao de remocao
 Produto* minimo(Produto* no) {
     while (no->esq != NULL) no = no->esq;
     return no;
 }
 
+//substitui um no na arvore por outro e ajusta os ponteiros de pai e filho 
 void transplantar(Produto** raiz, Produto* u, Produto* v) {
     if (u->pai == NULL)
         *raiz = v;
@@ -150,6 +157,7 @@ void transplantar(Produto** raiz, Produto* u, Produto* v) {
         v->pai = u->pai;
 }
 
+//corrige arvore apos remocao de um no, caso necessario
 Produto* corrigirRemocao(Produto* raiz, Produto* x) {
     while (x != raiz && (x == NULL || x->cor == BLACK)) {
         Produto* w;
@@ -210,6 +218,7 @@ Produto* corrigirRemocao(Produto* raiz, Produto* x) {
     return raiz;
 }
 
+//remove um produto e chama as funcoes seguintes como transplante e correcao
 Produto* removerProduto(Produto* raiz, int codigo) {
     Produto* z = buscarProduto(raiz, codigo);
     if (z == NULL) return raiz;
