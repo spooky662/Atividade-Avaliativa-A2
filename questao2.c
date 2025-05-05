@@ -4,6 +4,7 @@
 
 typedef enum { RED, BLACK } Color;
 
+//estrutura do no (produto)
 typedef struct Produto {
     int codigo;
     char nome[50];
